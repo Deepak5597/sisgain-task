@@ -1,0 +1,30 @@
+<div class="row details-card mt-3">
+    <div class="col-2">
+        <ng-container *ngIf="userData.gender.toLowerCase() == 'female';else maleImageBox;">
+            <img class="user_pic" src="../../assets/female.jpg">
+        </ng-container>
+        <ng-template #maleImageBox>
+            <img class="user_pic" src="../../assets/male.jpg">
+        </ng-template>
+    </div>
+    <div class="col-10">
+        <div class="row">
+            <div class="col-8 ">
+                <h4>{{userData.doctorName}} - <span>{{userData.role}} ; Banner Health</span></h4>
+                <ul>
+                    <li class="details-info">Email : <span>{{userData.email}}</span></li>
+                    <li class="details-info">Institute : <span>{{userData.institute}}</span></li>
+                    <li class="details-info">Gender : <span>{{userData.gender}}</span></li>
+                    <li class="details-info">Contact : <span>{{userData.contact}}</span></li>
+                    <li class="details-info">Address : <span>{{userData.address}}</span></li>
+                </ul>
+            </div>
+            <div class="col-4" *ngIf="currentCard == cardIndex">
+                <button class="btn btn-primary action-button">Details</button> 
+                <button class="btn btn-primary action-button">Schedule Appointment</button>
+                <button class="btn btn-primary action-button">E-Prescribe Setup</button>
+            </div>
+        </div>
+
+    </div>
+</div>
