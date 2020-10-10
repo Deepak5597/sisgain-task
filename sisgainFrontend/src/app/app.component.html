@@ -1,0 +1,143 @@
+<div class="container-fluid">
+  <div class="card main-card">
+    <div class="card-header main-heading">
+       User Directory
+       <button class="btn btn-primary float-right"  data-toggle="modal" data-target="#addUserModal"><i class="fas fa-plus"></i> Add New User</button>
+    </div>
+    <div class="card-body card-content bg-white">
+      <div class="container-fluid">
+        <div class="card main-card">
+          <div class="card-header bg-white">
+            <div class="row">
+              <div class="col-3">
+                <h6 class="mt-2">Filter By:</h6>
+              </div>
+              <div class="col-3">
+                <select id="inputState" class="form-control">
+                  <option selected>Roles...</option>
+                  <option>All</option>
+                  <option>Patients</option>
+                  <option>Provider</option>
+                </select>
+              </div>
+              <div class="col-3">
+                <select id="inputState" class="form-control">
+                  <option selected>Institution...</option>
+                  <option>All</option>
+                  <option>Institute 1</option>
+                </select>
+              </div>
+              <div class="col-3">
+                <select id="inputState" class="form-control" (change)="sortArrayInAcending(sortingCriteria)" [(ngModel)]="sortingCriteria">
+                  <option selected disabled value="Sort By...">Sort By...</option>
+                  <option value="doctorName">Name</option>
+                  <option value="institute">Institute</option>
+                </select>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-3">
+                <h6 class="mt-2">Search :</h6>
+              </div>
+              <div class="col-9">
+                <input type="text" class="form-control" id="searchBar" [(ngModel)]="searchText" (input)="filterList()">
+              </div>
+          </div>
+          <div class="card-body card-content mt-2">
+            <ng-container *ngIf="filteredUsers.length;else NoDataBlock;">
+              <ng-container *ngFor="let indUser of filteredUsers;let i=index;">
+                <app-docter-details-card [userData]="indUser" (click)="currentCard = i" [currentCard]="currentCard" [cardIndex]="i"></app-docter-details-card>
+              </ng-container>
+           </ng-container>
+           <ng-template #NoDataBlock>
+              <p class="text-center">No Data Found</p>
+           </ng-template>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addUserModalLabel">Add New User</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="userForm">
+          <div class="form-group row">
+            <label for="Name" class="col-sm-3 col-form-label">Name</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="Name" formControlName="doctorName">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="email" class="col-sm-3 col-form-label">email</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="email" formControlName="email">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="contact" class="col-sm-3 col-form-label">contact</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="contact" formControlName="contact">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="Institution" class="col-sm-3 col-form-label">Institution</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="Institution" formControlName="institute">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="gender" class="col-sm-3 col-form-label">gender</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="gender" formControlName="gender">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="role" class="col-sm-3 col-form-label">role</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="role" formControlName="role">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="Address" class="col-sm-3 col-form-label">Address</label>
+            <div class="col-sm-9">
+              <textarea row="3" columns="50" class="form-control" id="Address" formControlName="address"></textarea>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="imgName" class="col-sm-3 col-form-label">imgName</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="imgName" formControlName="imgName">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Discard</button>
+        <button type="submit" class="btn btn-success" (click)="addUser()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+<div class="alert alert-success" role="alert" *ngIf="showCommonModal && !isErrorMessage">
+  A simple primary alert—check it out!
+</div>
+<div class="alert alert-danger" role="alert" *ngIf="showCommonModal && isErrorMessage">
+  A simple primary alert—check it out!
+</div>
